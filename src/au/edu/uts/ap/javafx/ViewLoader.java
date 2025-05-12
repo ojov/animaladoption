@@ -1,6 +1,7 @@
 package au.edu.uts.ap.javafx;
 
 import javafx.fxml.*;
+import javafx.scene.paint.Color;
 import javafx.stage.*;
 import javafx.scene.*;
 import java.io.*;
@@ -23,7 +24,7 @@ public class ViewLoader {
                 });
         Parent root = loader.load();
         stage.setTitle(title);
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(root, 800, 600, Color.WHITE));
         stage.sizeToScene();
         stage.show();
     }
