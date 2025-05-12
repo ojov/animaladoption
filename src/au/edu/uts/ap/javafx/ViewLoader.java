@@ -1,13 +1,18 @@
 package au.edu.uts.ap.javafx;
 
-import javafx.fxml.*;
+import java.io.IOException;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.stage.*;
-import javafx.scene.*;
-import java.io.*;
-import java.lang.Runnable;
+import javafx.stage.Stage;
 
 public class ViewLoader {
+    private static final String STYLESHEET = "/view/style.css";
 
     public static <T> void showStage(T model, String fxml, String title, Stage stage, Runnable onStageClosed) throws IOException {
         FXMLLoader loader = new FXMLLoader(Controller.class.getResource(fxml), null, null,
@@ -22,9 +27,17 @@ public class ViewLoader {
                         throw new RuntimeException(e);
                     }
                 });
-        Parent root = loader.load();
+        Parent content = loader.load();
+        // 2. Create the header image
+        ImageView banner = new ImageView(new Image("/image/cat_banner.jpg"));
+        banner.setPreserveRatio(true);
+        banner.setFitWidth(500);
+
+        VBox root = new VBox(banner, content);
         stage.setTitle(title);
-        stage.setScene(new Scene(root, 800, 600, Color.WHITE));
+        Scene scene = new Scene(root, 500, 600, Color.WHITE);
+        scene.getStylesheets().add(ViewLoader.class.getResource(STYLESHEET).toExternalForm());
+        stage.setScene(scene);
         stage.sizeToScene();
         stage.show();
     }

@@ -5,5 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<VBox alignment="CENTER" styleClass="background" prefWidth="550.0" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" styleClass="background" prefWidth="550.0" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.ErrorController">
+
+    <Label text="Error" styleClass="error"/>
+    <Label fx:id="errorMessage" styleClass="label" wrapText="true"/>
+    <Button text="Close" onAction="#handleClose" styleClass="button"/>
+
 </VBox>

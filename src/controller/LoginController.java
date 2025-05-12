@@ -1,83 +1,90 @@
 package controller;
 
+
+import au.edu.uts.ap.javafx.Controller;
+import au.edu.uts.ap.javafx.ViewLoader;
+
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import au.edu.uts.ap.javafx.ViewLoader;
 import model.Application.AdoptionCentre;
-import model.Users.User;
+import model.Exceptions.UnauthorizedAccessException;
+import model.Users.Customer;
+import model.Users.Manager;
+import model.Users.Users;
 
-public class LoginController {
+public class LoginController extends Controller<AdoptionCentre> {
     @FXML
-    private TextField usernameTf;
+    private TextField username;
     @FXML
-    private PasswordField passwordPf;
+    private TextField email;
     @FXML
-    private TextField managerIdTf;
+    private TextField managerId;
 
-    private AdoptionCentre adoptionCentre;
 
-    public void initialize() {
-        // Initialize any necessary components
+    private Users getUsers() {
+        return model.getUsers();
     }
-
-    public void setAdoptionCentre(AdoptionCentre adoptionCentre) {
-        this.adoptionCentre = adoptionCentre;
+    private void openMainView(Customer customer) throws IOException {
+        AdoptionCentre.setLoggedInUser(customer);
+        ViewLoader.showStage(customer, "/view/CustomerDashboard.fxml", "Customer Dashboard", stage);
     }
-
-    @FXML
-    private void handleLogin(ActionEvent event) {
-        String username = usernameTf.getText();
-        String password = passwordPf.getText();
-        
-        if (!username.isEmpty() && !password.isEmpty()) {
-            // Attempt login with username and password
-            User user = adoptionCentre.getUsers().validateUser(username, password);
-            if (user != null) {
-                loadUserDashboard(user);
-            } else {
-                ViewLoader.showErrorAlert("Login Failed", "Invalid username or password");
-            }
-        }
+    private void openMainView(Manager manager) throws IOException {
+        AdoptionCentre.setLoggedInUser(manager);
+        ViewLoader.showStage(manager, "/view/ManagerDashboard.fxml", "Manager Dashboard", stage);
     }
-
-    @FXML
-    private void handleManagerLogin(ActionEvent event) {
-        String managerId = managerIdTf.getText();
-        
-        if (!managerId.isEmpty()) {
-            // Attempt login with manager ID
-            User manager = adoptionCentre.getUsers().validateManager(managerId);
-            if (manager != null) {
-                loadManagerDashboard(manager);
-            } else {
-                ViewLoader.showErrorAlert("Login Failed", "Invalid Manager ID");
-            }
-        }
-    }
-
-    private void loadUserDashboard(User user) {
+    private void showErrorWindow(String message) {
         try {
-            ViewLoader.showStage(adoptionCentre, "/view/UserDashboardView.fxml", 
-                "User Dashboard - " + user.getUsername(), (Stage)usernameTf.getScene().getWindow());
-        } catch (Exception e) {
-            ViewLoader.showErrorAlert("Error", "Could not load dashboard: " + e.getMessage());
+            // Open error in new modal window
+            Stage errorStage = new Stage();
+            errorStage.initModality(Modality.APPLICATION_MODAL);
+            errorStage.initOwner(stage); // Parent to login window
+
+            ViewLoader.showStage(
+                    message, // Pass error message as model
+                    "/view/ErrorView.fxml",
+                    "Error",
+                    errorStage
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
-    private void loadManagerDashboard(User manager) {
-        try {
-            ViewLoader.showStage(adoptionCentre, "/view/ManagerDashboardView.fxml", 
-                "Manager Dashboard", (Stage)managerIdTf.getScene().getWindow());
-        } catch (Exception e) {
-            ViewLoader.showErrorAlert("Error", "Could not load dashboard: " + e.getMessage());
-        }
-    }
-
     @FXML
-    private void handleExit(ActionEvent event) {
-        ((Stage)usernameTf.getScene().getWindow()).close();
+    public void handleLogin(ActionEvent event) {
+        try {
+            if (managerId.getText().isEmpty()) {
+                // Customer login
+                Customer customer = getUsers().validateCustomer(
+                        username.getText(),
+                        email.getText()
+                );
+                openMainView(customer);
+            } else {
+                // Manager login
+                Manager manager = getUsers().validateManager(
+                        managerId.getText()
+                );
+                openMainView(manager);
+            }
+        } catch (UnauthorizedAccessException e) {
+            showErrorWindow("Invalid credentials"); // Opens modal window
+        } catch (NumberFormatException e) {
+            showErrorWindow("ID must be an integer");
+        } catch (Exception e) {
+            showErrorWindow("Login failed: " + e.getMessage());
+        }
     }
+    @FXML
+    private void handleLogout(ActionEvent event) {
+        // Your logout logic here
+        stage.close();
+    }
+
+
+
 }
