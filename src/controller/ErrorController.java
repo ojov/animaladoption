@@ -2,6 +2,8 @@ package controller;
 
 import au.edu.uts.ap.javafx.Controller;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -13,21 +15,25 @@ public class ErrorController extends Controller<Exception> {
     @FXML
     private Label errorMessage;
 
-    public ErrorController(Label errorType) {
-        this.errorType = errorType;
-    }
-    private void updateErrorDisplay() {
-        if (errorType != null && model != null) {
-            errorType.setText(model.getClass().getSimpleName());
-            errorMessage.setText(model.getMessage());
-        }
+    private final StringProperty errorTypeText = new SimpleStringProperty("");
+    private final StringProperty errorMessageText = new SimpleStringProperty("");
+
+
+    public ErrorController() {
     }
 
-    @Override
-    public void setModel(Exception model) {
-        super.setModel(model);
-        updateErrorDisplay();
+    @FXML
+    private void initialize() {
+        // Bind the UI elements to the properties
+        if (errorType != null && errorMessage != null) {
+            errorTypeText.set(model.getClass().getSimpleName());
+            errorMessageText.set(model.getMessage());
+            errorType.textProperty().bind(errorTypeText);
+            errorMessage.textProperty().bind(errorMessageText);
+        }
+
     }
+
 
 
 

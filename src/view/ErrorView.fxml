@@ -7,8 +7,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="500.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ErrorController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="500.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ErrorController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0" prefWidth="500.0">
          <children>
@@ -22,8 +23,11 @@
          <children>
             <Line endX="464.0" layoutX="136.0" layoutY="69.0" startX="-136.0" />
             <Button alignment="CENTER" layoutY="171.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="30.0" prefWidth="500.0" text="Close" />
-            <Label fx:id="errrorType" layoutX="172.0" layoutY="23.0" prefHeight="20.0" prefWidth="188.0" styleClass="error" text="Error Typeeel" />
-            <Label fx:id="errorMessage" alignment="CENTER" layoutX="161.0" layoutY="77.0" onContextMenuRequested="#updateErrorDisplay" prefHeight="47.0" prefWidth="179.0" text="Label" />
+            <Label fx:id="errorType" alignment="CENTER" layoutX="52.0" layoutY="20.0" prefHeight="41.0" prefWidth="409.0" styleClass="error" text="Error Typeeel">
+               <font>
+                  <Font size="12.0" />
+               </font></Label>
+            <Label fx:id="errorMessage" alignment="CENTER" layoutX="161.0" layoutY="77.0" prefHeight="47.0" prefWidth="179.0" text="Label" />
          </children></AnchorPane>
   </items>
 </SplitPane>
