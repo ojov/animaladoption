@@ -8,10 +8,12 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Application.AdoptionCentre;
+import model.Exceptions.InvalidOperationException;
 import model.Exceptions.UnauthorizedAccessException;
 import model.Users.Customer;
 import model.Users.Manager;
@@ -24,6 +26,10 @@ public class LoginController extends Controller<AdoptionCentre> {
     private TextField email;
     @FXML
     private TextField managerId;
+    @FXML
+    private Button exitButton;
+    @FXML
+    private Button loginButton;
 
 
     private Users getUsers() {
@@ -37,15 +43,15 @@ public class LoginController extends Controller<AdoptionCentre> {
         AdoptionCentre.setLoggedInUser(manager);
         ViewLoader.showStage(manager, "/view/ManagerDashboard.fxml", "Manager Dashboard", stage);
     }
-    private void showErrorWindow(String message) {
+    private void showErrorWindow(Exception exception) {
         try {
             // Open error in new modal window
             Stage errorStage = new Stage();
             errorStage.initModality(Modality.APPLICATION_MODAL);
-            errorStage.initOwner(stage); // Parent to login window
+            errorStage.initOwner(stage);
 
             ViewLoader.showStage(
-                    message, // Pass error message as model
+                    exception, // Pass error message as model
                     "/view/ErrorView.fxml",
                     "Error",
                     errorStage
@@ -72,11 +78,11 @@ public class LoginController extends Controller<AdoptionCentre> {
                 openMainView(manager);
             }
         } catch (UnauthorizedAccessException e) {
-            showErrorWindow("Invalid credentials"); // Opens modal window
-        } catch (NumberFormatException e) {
-            showErrorWindow("ID must be an integer");
+            showErrorWindow(e); // Opens modal window
+        } catch (InvalidOperationException e) {
+            showErrorWindow(e);
         } catch (Exception e) {
-            showErrorWindow("Login failed: " + e.getMessage());
+            showErrorWindow(e);
         }
     }
     @FXML

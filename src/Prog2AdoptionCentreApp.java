@@ -7,6 +7,7 @@ import model.Users.*;
 import model.Application.*;
 
 public class Prog2AdoptionCentreApp extends Application{
+
     public static void main(String[] args){
         launch(args);
     }
