@@ -58,8 +58,12 @@ ListView .list-cell {
 .filter {
     -fx-background-color: #444444;
     -fx-border-color: #444444;
+    -fx-text-fill:white;
+    -fx-font-weight:bold;
 }
+
 .filter:hover {
     -fx-background-color: #333333;
+    -fx-cursor: pointer;
 }
 
