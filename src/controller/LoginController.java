@@ -39,10 +39,12 @@ public class LoginController extends Controller<AdoptionCentre> {
         AdoptionCentre.setLoggedInUser(customer);
         ViewLoader.showStage(customer, "/view/CustomerDashboard.fxml", "Customer Dashboard", stage);
     }
-    private void openMainView() throws IOException {
 
-        ViewLoader.showStage(model.getAnimals(), "/view/ManagerDashboard.fxml", "Manager Dashboard", stage);
+    private void openManagerView() throws IOException {
+
+        ViewLoader.showStage(model, "/view/ManagerDashboard.fxml", "Manager Dashboard", stage);
     }
+
     private void showErrorWindow(Exception exception) {
         try {
             // Open error in new modal window
@@ -62,7 +64,7 @@ public class LoginController extends Controller<AdoptionCentre> {
     }
 
     @FXML
-    public void handleLogin(ActionEvent event) {
+    public void handleLogin() {
         try {
             if (managerId.getText().isEmpty()) {
                 // Customer login
@@ -76,12 +78,8 @@ public class LoginController extends Controller<AdoptionCentre> {
                 Manager manager = getUsers().validateManager(
                         managerId.getText()
                 );
-                openMainView();
+                openManagerView();
             }
-        } catch (UnauthorizedAccessException e) {
-            showErrorWindow(e); // Opens modal window
-        } catch (InvalidOperationException e) {
-            showErrorWindow(e);
         } catch (Exception e) {
             showErrorWindow(e);
         }
