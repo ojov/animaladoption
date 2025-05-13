@@ -13,6 +13,7 @@ public class Animal {
         this.isAdopted = new SimpleBooleanProperty(false);
     }
 
+    public int getAge() { return age.get(); }
     public String getName() { return name.get(); }
     public boolean isAdopted() { return isAdopted.get(); }
     public void adopt() {

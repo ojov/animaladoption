@@ -39,9 +39,9 @@ public class LoginController extends Controller<AdoptionCentre> {
         AdoptionCentre.setLoggedInUser(customer);
         ViewLoader.showStage(customer, "/view/CustomerDashboard.fxml", "Customer Dashboard", stage);
     }
-    private void openMainView(Manager manager) throws IOException {
-        AdoptionCentre.setLoggedInUser(manager);
-        ViewLoader.showStage(manager, "/view/ManagerDashboard.fxml", "Manager Dashboard", stage);
+    private void openMainView() throws IOException {
+
+        ViewLoader.showStage(model.getAnimals(), "/view/ManagerDashboard.fxml", "Manager Dashboard", stage);
     }
     private void showErrorWindow(Exception exception) {
         try {
@@ -60,6 +60,7 @@ public class LoginController extends Controller<AdoptionCentre> {
             e.printStackTrace();
         }
     }
+
     @FXML
     public void handleLogin(ActionEvent event) {
         try {
@@ -75,7 +76,7 @@ public class LoginController extends Controller<AdoptionCentre> {
                 Manager manager = getUsers().validateManager(
                         managerId.getText()
                 );
-                openMainView(manager);
+                openMainView();
             }
         } catch (UnauthorizedAccessException e) {
             showErrorWindow(e); // Opens modal window
@@ -90,7 +91,5 @@ public class LoginController extends Controller<AdoptionCentre> {
         // Your logout logic here
         stage.close();
     }
-
-
 
 }

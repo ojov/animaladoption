@@ -54,7 +54,7 @@ ListView .list-cell {
     -fx-cursor: pointer;
     -fx-background-color: #aa82ff;
 }
-
+ad
 .filter {
     -fx-background-color: #444444;
     -fx-border-color: #444444;
@@ -67,3 +67,8 @@ ListView .list-cell {
     -fx-cursor: pointer;
 }
 
+.table-view .column-header .label {
+
+    -fx-alignment: CENTER_LEFT;
+    -fx-padding: 5 0 5 10;
+}
