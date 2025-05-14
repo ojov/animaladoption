@@ -6,6 +6,7 @@ import au.edu.uts.ap.javafx.ViewLoader;
 
 import java.io.IOException;
 
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,8 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Application.AdoptionCentre;
-import model.Exceptions.InvalidOperationException;
-import model.Exceptions.UnauthorizedAccessException;
 import model.Users.Customer;
 import model.Users.Manager;
 import model.Users.Users;
@@ -27,14 +26,24 @@ public class LoginController extends Controller<AdoptionCentre> {
     @FXML
     private TextField managerId;
     @FXML
-    private Button exitButton;
+    Button loginButton;
     @FXML
-    private Button loginButton;
+    public void initialize() {
+        ChangeListener<String> listener = (obs, oldVal, newVal) -> checkFields();
+
+        username.textProperty().addListener(listener);
+        email.textProperty().addListener(listener);
+        managerId.textProperty().addListener(listener);
+
+        checkFields(); // evaluate initial state
+    }
 
 
     private Users getUsers() {
         return model.getUsers();
     }
+
+
     private void openMainView(Customer customer) throws IOException {
         AdoptionCentre.setLoggedInUser(customer);
         ViewLoader.showStage(customer, "/view/CustomerDashboard.fxml", "Customer Dashboard", stage);
@@ -62,6 +71,15 @@ public class LoginController extends Controller<AdoptionCentre> {
             e.printStackTrace();
         }
     }
+    private void checkFields() {
+        boolean managerIdFilled = !managerId.getText().trim().isEmpty();
+        boolean emailAndUsernameFilled = !email.getText().trim().isEmpty()
+                && !username.getText().trim().isEmpty();
+
+        boolean shouldEnable = managerIdFilled || emailAndUsernameFilled;
+
+        loginButton.setDisable(!shouldEnable);
+    }
 
     @FXML
     public void handleLogin() {
@@ -84,6 +102,7 @@ public class LoginController extends Controller<AdoptionCentre> {
             showErrorWindow(e);
         }
     }
+
     @FXML
     private void handleLogout(ActionEvent event) {
         // Your logout logic here

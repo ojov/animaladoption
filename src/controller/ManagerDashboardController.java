@@ -5,16 +5,16 @@ import au.edu.uts.ap.javafx.ViewLoader;
 
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Animals.Animal;
-import model.Animals.Animals;
 import model.Application.AdoptionCentre;
-import model.Users.Users;
 
 public class ManagerDashboardController extends Controller<AdoptionCentre> {
     public TableView<Animal> animalTableView;
@@ -22,22 +22,24 @@ public class ManagerDashboardController extends Controller<AdoptionCentre> {
     public TableColumn<Animal, Integer> ageColumn;
     public TableColumn<Animal, String> typeColumn;
     public TableColumn<Animal, String> isAdoptedColumn;
+    public Button removeButton;
 
     public void initialize() {
+        removeButton.disableProperty().bind(
+                animalTableView.getSelectionModel().selectedItemProperty().isNull()
+        );
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         isAdoptedColumn.setCellValueFactory(new PropertyValueFactory<>("isAdopted"));
         animalTableView.setItems(model.getAnimals().getAnimals());
     }
-    @FXML
-    private void handleAddAnimal() {
-        // Implementation for adding a new animal
-    }
 
     @FXML
     private void handleRemoveAnimal() {
-        // Implementation for removing selected animal
+        Animal selected = animalTableView.getSelectionModel().getSelectedItem();
+        model.getAnimals().remove(selected);
+        animalTableView.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -45,7 +47,7 @@ public class ManagerDashboardController extends Controller<AdoptionCentre> {
         // Implementation for updating selected animal
     }
     @FXML
-    private void openUserList() throws IOException {
+    private void openUserList() {
         try {
             // Open error in new modal window
             Stage errorStage = new Stage();
@@ -55,12 +57,35 @@ public class ManagerDashboardController extends Controller<AdoptionCentre> {
             ViewLoader.showStage(
                     model.getUsers(),
                     "/view/UserListView.fxml",
-                    "Error",
+                    "User List",
                     errorStage
             );
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    private void openAddAnimal(){
+        try {
+            // Open error in new modal window
+            Stage errorStage = new Stage();
+            errorStage.initModality(Modality.APPLICATION_MODAL);
+            errorStage.initOwner(stage);
+
+            ViewLoader.showStage(
+                    model.getAnimals(),
+                    "/view/AddAnimalView.fxml",
+                    "Add Animal",
+                    errorStage
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleClose(ActionEvent event) {
+        // Your logout logic here
+        stage.close();
     }
 
 

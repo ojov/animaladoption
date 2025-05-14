@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 
-<VBox alignment="CENTER" styleClass="background" prefWidth="550.0" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" prefHeight="400" prefWidth="500" spacing="15" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddAnimalController">
+
+    <!-- Banner Image -->
+    <ImageView fitHeight="150" fitWidth="500">
+        <image>
+            <Image url="@../image/cat_banner.jpg" />
+        </image>
+    </ImageView>
+
+    <!-- Title -->
+    <Label prefHeight="32.0" prefWidth="94.0" styleClass="label" text="Add Animal" />
+   <Line endX="100.0" startX="-393.5" />
+
+    <!-- Form Inputs -->
+    <VBox alignment="CENTER" prefHeight="161.0" prefWidth="500.0" spacing="10">
+        <HBox alignment="CENTER" spacing="10">
+            <Label text="Type" />
+            <ComboBox fx:id="typeBox" prefWidth="150" promptText="Select type" />
+        </HBox>
+
+        <HBox alignment="CENTER" spacing="10">
+            <Label text="Name" />
+            <TextField fx:id="nameField" prefWidth="150" />
+        </HBox>
+
+        <HBox alignment="CENTER" spacing="10">
+            <Label text="Age" />
+            <TextField fx:id="ageField" prefWidth="150" />
+        </HBox>
+    </VBox>
+
+    <!-- Buttons -->
+    <HBox alignment="CENTER">
+        <Button fx:id="addButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleAddAnimal" prefHeight="19.0" prefWidth="225.0" text="Add" />
+        <Button fx:id="closeBtn" alignment="CENTER" contentDisplay="CENTER" onAction="#handleClose" prefHeight="19.0" prefWidth="280.0" text="Close" />
+    </HBox>
+
 </VBox>

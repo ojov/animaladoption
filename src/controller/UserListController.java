@@ -8,11 +8,17 @@ import model.Users.User;
 import model.Users.Users;
 
 public class UserListController extends Controller<Users> {
+
     @FXML
     private ListView<User> userListView;
 
-    private void initialize() {
+    @FXML
+    public void initialize() {
         userListView.setItems(model.getUsers());
     }
 
+    @FXML
+    public void handleClose() {
+        stage.close();
+    }
 }

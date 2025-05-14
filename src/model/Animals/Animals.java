@@ -58,4 +58,8 @@ public class Animals {
 
         return this;
     }
+    public ObservableList<String> getAvailableTypes() {
+        return FXCollections.observableArrayList("Cat", "Dog", "Rabbit");
+    }
+
 }

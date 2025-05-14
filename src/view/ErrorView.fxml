@@ -27,7 +27,8 @@
                <font>
                   <Font size="12.0" />
                </font></Label>
-            <Label fx:id="errorMessage" alignment="CENTER" layoutX="161.0" layoutY="77.0" prefHeight="47.0" prefWidth="179.0" text="Label" />
-         </children></AnchorPane>
+            <Label fx:id="errorMessage" alignment="CENTER" layoutX="108.0" layoutY="77.0" prefHeight="47.0" prefWidth="312.0" text="Label" wrapText="true" />
+         </children>
+    </AnchorPane>
   </items>
 </SplitPane>

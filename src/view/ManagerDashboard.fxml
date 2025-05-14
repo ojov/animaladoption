@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="471.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManagerDashboardController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="471.0" styleClass="background" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ManagerDashboardController">
    <children>
       <ImageView fitHeight="145.0" fitWidth="473.0">
          <image>
@@ -39,10 +39,10 @@
       </TableView>
       <HBox alignment="BOTTOM_LEFT" prefHeight="78.0" prefWidth="404.0">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="UserList" />
-            <Button alignment="CENTER" layoutX="10.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Add" />
-            <Button alignment="CENTER" layoutX="133.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Remove" />
-            <Button alignment="CENTER" layoutX="256.0" layoutY="26.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="123.0" text="Close" />
+            <Button fx:id="userList" alignment="CENTER" mnemonicParsing="false" onAction="#openUserList" prefHeight="25.0" prefWidth="123.0" text="UserList" />
+            <Button fx:id="addBtn" alignment="CENTER" layoutX="10.0" layoutY="26.0" mnemonicParsing="false" onAction="#openAddAnimal" prefHeight="25.0" prefWidth="123.0" text="Add" />
+            <Button fx:id="removeButton" alignment="CENTER" layoutX="133.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleRemoveAnimal" prefHeight="25.0" prefWidth="123.0" text="Remove" />
+            <Button alignment="CENTER" layoutX="256.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleClose" prefHeight="25.0" prefWidth="123.0" text="Close" />
          </children>
       </HBox>
    </children>
