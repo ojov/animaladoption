@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Animals.Animal;
 import model.Application.AdoptionCentre;
+import model.Exceptions.InvalidOperationException;
 
 public class ManagerDashboardController extends Controller<AdoptionCentre> {
     public TableView<Animal> animalTableView;
@@ -38,6 +39,7 @@ public class ManagerDashboardController extends Controller<AdoptionCentre> {
     @FXML
     private void handleRemoveAnimal() {
         Animal selected = animalTableView.getSelectionModel().getSelectedItem();
+        if(selected.isAdopted()) showErrorWindow(new InvalidOperationException(selected.getName()+" is laready adopted"));
         model.getAnimals().remove(selected);
         animalTableView.getSelectionModel().clearSelection();
     }
@@ -86,6 +88,23 @@ public class ManagerDashboardController extends Controller<AdoptionCentre> {
     private void handleClose(ActionEvent event) {
         // Your logout logic here
         stage.close();
+    }
+    private void showErrorWindow(Exception exception) {
+        try {
+            // Open error in new modal window
+            Stage errorStage = new Stage();
+            errorStage.initModality(Modality.APPLICATION_MODAL);
+            errorStage.initOwner(stage);
+
+            ViewLoader.showStage(
+                    exception, // Pass error message as model
+                    "/view/ErrorView.fxml",
+                    "Error",
+                    errorStage
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
