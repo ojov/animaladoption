@@ -45,10 +45,6 @@ public class ManagerDashboardController extends Controller<AdoptionCentre> {
     }
 
     @FXML
-    private void handleUpdateAnimal() {
-        // Implementation for updating selected animal
-    }
-    @FXML
     private void openUserList() {
         try {
             // Open error in new modal window

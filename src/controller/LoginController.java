@@ -6,7 +6,6 @@ import au.edu.uts.ap.javafx.ViewLoader;
 
 import java.io.IOException;
 
-import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,13 +28,31 @@ public class LoginController extends Controller<AdoptionCentre> {
     Button loginButton;
     @FXML
     public void initialize() {
-        ChangeListener<String> listener = (obs, oldVal, newVal) -> checkFields();
+        username.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty()) {
+                managerId.clear();
+            }
+            checkFields();
+        });
 
-        username.textProperty().addListener(listener);
-        email.textProperty().addListener(listener);
-        managerId.textProperty().addListener(listener);
+        email.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty()) {
+                managerId.clear();
+            }
+            checkFields();
+        });
 
-        checkFields(); // evaluate initial state
+        // 🔁 When typing in managerId, clear username and email
+        managerId.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.isEmpty()) {
+                username.clear();
+                email.clear();
+            }
+            checkFields();
+        });
+
+        // Initial check
+        checkFields();
     }
 
 
@@ -44,14 +61,13 @@ public class LoginController extends Controller<AdoptionCentre> {
     }
 
 
-    private void openMainView(Customer customer) throws IOException {
-        AdoptionCentre.setLoggedInUser(customer);
-        ViewLoader.showStage(customer, "/view/CustomerDashboard.fxml", "Customer Dashboard", stage);
+    private void openCustomerView() throws IOException {
+        ViewLoader.showStage(model, "/view/CustomerDashboard.fxml", "Customer Dashboard", stage);
     }
 
     private void openManagerView() throws IOException {
 
-        ViewLoader.showStage(model, "/view/ManagerDashboard.fxml", "Manager Dashboard", stage);
+        ViewLoader.showStage(model, "/view/ManagercDashboard.fxml", "Manager Dashboard", stage);
     }
 
     private void showErrorWindow(Exception exception) {
@@ -90,13 +106,13 @@ public class LoginController extends Controller<AdoptionCentre> {
                         username.getText(),
                         email.getText()
                 );
-                openMainView(customer);
+                openCustomerView();
             } else {
                 // Manager login
                 Manager manager = getUsers().validateManager(
                         managerId.getText()
                 );
-                openManagerView();
+                if(manager!=null) openManagerView();
             }
         } catch (Exception e) {
             showErrorWindow(e);
