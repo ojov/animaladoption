@@ -22,10 +22,10 @@
       <Separator id="seperator" orientation="VERTICAL" prefHeight="15.0" styleClass="background" />
       <HBox prefHeight="34.0" prefWidth="471.0" styleClass="filter">
          <children>
-            <TextField id="all" fx:id="all" alignment="CENTER" editable="false" prefHeight="32.0" prefWidth="129.0" promptText="All" styleClass="filter" text="All" />
-            <TextField id="cat" fx:id="catF" alignment="CENTER" editable="false" layoutX="11.0" layoutY="11.0" prefHeight="32.0" prefWidth="129.0" promptText="Cat" styleClass="filter" text="Cat" />
-            <TextField id="dog" fx:id="dogF" alignment="CENTER" editable="false" layoutX="140.0" layoutY="11.0" prefHeight="32.0" prefWidth="129.0" promptText="Dog" styleClass="filter" text="Dog" />
-            <TextField id="rabbit" fx:id="rabbitF" alignment="CENTER" editable="false" layoutX="269.0" layoutY="11.0" prefHeight="32.0" prefWidth="129.0" promptText="Rabbit" styleClass="filter" text="Rabbit" />
+            <Button id="all" fx:id="all" alignment="CENTER"  prefHeight="32.0" prefWidth="129.0"  styleClass="filter" text="All" />
+            <Button id="cat" fx:id="catF" alignment="CENTER"  layoutX="11.0" layoutY="11.0" prefHeight="32.0" prefWidth="129.0"  styleClass="filter" text="Cat" />
+            <Button id="dog" fx:id="dogF" alignment="CENTER"  layoutX="140.0" layoutY="11.0" prefHeight="32.0" prefWidth="129.0"  styleClass="filter" text="Dog" />
+            <Button id="rabbit" fx:id="rabbitF" alignment="CENTER"  layoutX="269.0" layoutY="11.0" prefHeight="32.0" prefWidth="129.0"  styleClass="filter" text="Rabbit" />
          </children>
       </HBox>
       <Separator orientation="VERTICAL" prefHeight="25.0" />

@@ -86,13 +86,6 @@ public class CustomerDashboardController extends Controller<AdoptionCentre> {
         stage.close();
     }
 
-    private String getType(Animal animal){
-        return switch (animal.typeProperty().get()) {
-            case "Cat" -> "Cat's";
-            case "Dog" -> "Dog's";
-            case "Rabbit" -> "Rabbit's";
-            default -> "Unknown";
-        };
-    }
+
 
 }
