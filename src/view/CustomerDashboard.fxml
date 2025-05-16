@@ -22,7 +22,7 @@
         <Separator orientation="VERTICAL" prefHeight="25.0" />
       <ButtonBar prefHeight="40.0" prefWidth="200.0" styleClass="button">
         <buttons>
-            <Button fx:id="detaiBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showDetails" prefHeight="19.0" prefWidth="174.0" text="My Details" />
+            <Button fx:id="detailBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showDetails" prefHeight="19.0" prefWidth="174.0" text="My Details" />
             <Button fx:id="adoptButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAdopt" prefHeight="19.0" prefWidth="174.0" text="Adopt" />
           <Button fx:id="close" mnemonicParsing="false" onAction="#handleClose" text="Close" />
         </buttons>

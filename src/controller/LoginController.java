@@ -25,12 +25,15 @@ public class LoginController extends Controller<AdoptionCentre> {
     @FXML
     private TextField managerId;
     @FXML
-    Button loginButton;
+    private Button loginButton;
     @FXML
     public void initialize() {
         username.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty()) {
                 managerId.clear();
+                managerId.setDisable(true);
+            }else {
+                managerId.setDisable(false);
             }
             checkFields();
         });
@@ -38,7 +41,8 @@ public class LoginController extends Controller<AdoptionCentre> {
         email.textProperty().addListener((obs, oldVal, newVal) -> {
             if (!newVal.isEmpty()) {
                 managerId.clear();
-            }
+                managerId.setDisable(true);
+            }else {managerId.setDisable(false);}
             checkFields();
         });
 
@@ -47,6 +51,11 @@ public class LoginController extends Controller<AdoptionCentre> {
             if (!newVal.isEmpty()) {
                 username.clear();
                 email.clear();
+                username.setDisable(true);
+                email.setDisable(true);
+            } else {
+                username.setDisable(false);
+                email.setDisable(false);
             }
             checkFields();
         });
@@ -67,7 +76,7 @@ public class LoginController extends Controller<AdoptionCentre> {
 
     private void openManagerView() throws IOException {
 
-        ViewLoader.showStage(model, "/view/ManagercDashboard.fxml", "Manager Dashboard", stage);
+        ViewLoader.showStage(model, "/view/ManagerDashboard.fxml", "Manager Dashboard", stage);
     }
 
     private void showErrorWindow(Exception exception) {
@@ -87,6 +96,7 @@ public class LoginController extends Controller<AdoptionCentre> {
             e.printStackTrace();
         }
     }
+
     private void checkFields() {
         boolean managerIdFilled = !managerId.getText().trim().isEmpty();
         boolean emailAndUsernameFilled = !email.getText().trim().isEmpty()
@@ -102,14 +112,14 @@ public class LoginController extends Controller<AdoptionCentre> {
         try {
             if (managerId.getText().isEmpty()) {
                 // Customer login
-                Customer customer = getUsers().validateCustomer(
+                Customer customer = model.getUsers().validateCustomer(
                         username.getText(),
                         email.getText()
                 );
-                openCustomerView();
+                if(customer!=null) openCustomerView();
             } else {
                 // Manager login
-                Manager manager = getUsers().validateManager(
+                Manager manager = model.getUsers().validateManager(
                         managerId.getText()
                 );
                 if(manager!=null) openManagerView();
